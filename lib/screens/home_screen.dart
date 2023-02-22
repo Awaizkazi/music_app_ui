@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/playlist_model.dart';
 import '../models/song_model.dart';
+import '../widgets/playlist_card.dart';
 import '../widgets/section_header.dart';
 import '../widgets/song_card.dart';
 
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               //! Here we are calling the Cusotmize Search bar
               _DiscoverMusic(),
-              _TrendingMusic(songs: songs),
+              // _TrendingMusic(songs: songs),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
@@ -47,40 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: playlists.length,
                       shrinkWrap: true,
                       itemBuilder: ((context, index) {
-                        return Container(
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12.0),
-                                child: Image.network(
-                                  playlists[index].imageUrl,
-                                  height: 50,
-                                  width: 50,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    playlists[index].title,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    playlists[index].title,
-                                    maxLines: 2,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
+                        return PlaylistCard(playlists: playlists[index]);
                       }),
                     ),
                   ],
