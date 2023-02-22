@@ -12,14 +12,21 @@ class SongCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var index;
     return Container(
-      width: MediaQuery.of(context).size.width * 0.45,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(songs.coverUrl),
-          fit: BoxFit.cover,
-        ),
+      margin: EdgeInsets.only(right: 10.0),
+      child: Stack(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width * 0.45,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(songs.coverUrl),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(9.0),
+            ),
+          ),
+        ],
       ),
     );
   }

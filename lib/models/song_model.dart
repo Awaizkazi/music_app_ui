@@ -20,14 +20,14 @@ class Song {
     Song(
       title: 'Pathaan',
       description: 'Pathaan',
-      url: 'assets/music/Pathaan.mp3',
+      url: 'assets/music/pathaan.mp3',
       coverUrl: 'assets/images/pathaan.png',
     ),
     Song(
       title: 'Kesariya',
       description: 'Kesariya',
       url: 'assets/music/kesariya.mp3',
-      coverUrl: 'assets/images/kseariya.png',
+      coverUrl: 'assets/images/kesariya.jpg',
     ),
   ];
 }
