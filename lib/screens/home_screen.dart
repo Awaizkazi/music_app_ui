@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/playlist_model.dart';
 import '../models/song_model.dart';
 import '../widgets/section_header.dart';
 import '../widgets/song_card.dart';
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     List<Song> songs = Song.songs;
+    List<Playlist> playlists = Playlist.playlists;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -35,26 +37,51 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               //! Here we are calling the Cusotmize Search bar
               _DiscoverMusic(),
+              _TrendingMusic(songs: songs),
               Padding(
-                padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: SectionHeader(title: 'Trending Music'),
-                    ),
-                    SizedBox(height: 20),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.27,
-                      child: ListView.builder(
-                        itemCount: songs.length,
-                        itemBuilder: (context, index) {
-                          return SongCard(
-                            song: songs[index],
-                          );
-                        },
-                        scrollDirection: Axis.horizontal,
-                      ),
+                    SectionHeader(title: 'Playlists'),
+                    ListView.builder(
+                      itemCount: playlists.length,
+                      shrinkWrap: true,
+                      itemBuilder: ((context, index) {
+                        return Container(
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Image.network(
+                                  playlists[index].imageUrl,
+                                  height: 50,
+                                  width: 50,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    playlists[index].title,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    playlists[index].title,
+                                    maxLines: 2,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -62,6 +89,43 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _TrendingMusic extends StatelessWidget {
+  const _TrendingMusic({
+    super.key,
+    required this.songs,
+  });
+
+  final List<Song> songs;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: SectionHeader(title: 'Trending Music'),
+          ),
+          SizedBox(height: 20),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.27,
+            child: ListView.builder(
+              itemCount: songs.length,
+              itemBuilder: (context, index) {
+                return SongCard(
+                  song: songs[index],
+                );
+              },
+              scrollDirection: Axis.horizontal,
+            ),
+          ),
+        ],
       ),
     );
   }
