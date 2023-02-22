@@ -8,16 +8,16 @@ class SongCard extends StatelessWidget {
     required this.songs,
   });
 
-  final List<Song> songs;
+  final Song songs;
 
   @override
   Widget build(BuildContext context) {
-    var index = 0;
+    var index;
     return Container(
       width: MediaQuery.of(context).size.width * 0.45,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(songs[index].coverUrl),
+          image: AssetImage(songs.coverUrl),
           fit: BoxFit.cover,
         ),
       ),

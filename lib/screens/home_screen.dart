@@ -49,7 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListView.builder(
                         itemCount: songs.length,
                         itemBuilder: (context, index) {
-                          return SongCard(songs: songs);
+                          return SongCard(
+                            songs: songs[index],
+                          );
                         },
                         scrollDirection: Axis.horizontal,
                       ),
@@ -64,8 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
 
 class _DiscoverMusic extends StatelessWidget {
   const _DiscoverMusic({
