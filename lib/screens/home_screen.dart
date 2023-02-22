@@ -26,49 +26,65 @@ class _HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: _customNavBar(),
         appBar: _CustomAppBar(),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Welcome',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Enjoy your favorite music',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  decoration: InputDecoration(
-                    isDense: true,
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Search',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: Colors.grey.shade500),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.grey.shade400,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      //! This borderSide will be used for Removing the borderSide.none
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          child: Column(
+            children: [
+              //! Here we are calling the Cusotmize Search bar
+              _DiscoverMusic(),
+            ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _DiscoverMusic extends StatelessWidget {
+  const _DiscoverMusic({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Welcome',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          SizedBox(height: 10),
+          Text(
+            'Enjoy your favorite music',
+            style: Theme.of(context)
+                .textTheme
+                .headline6!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 20),
+          TextField(
+            decoration: InputDecoration(
+              isDense: true,
+              fillColor: Colors.white,
+              filled: true,
+              hintText: 'Search',
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: Colors.grey.shade500),
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.grey.shade400,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                //! This borderSide will be used for Removing the borderSide.none
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
