@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               //! Here we are calling the Cusotmize Search bar
               _DiscoverMusic(),
-              // _TrendingMusic(songs: songs),
+              _TrendingMusic(songs: songs),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
@@ -47,6 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ListView.builder(
                       itemCount: playlists.length,
                       shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 20),
+                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
                         return PlaylistCard(playlists: playlists[index]);
                       }),
