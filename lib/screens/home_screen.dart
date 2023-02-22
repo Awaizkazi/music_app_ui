@@ -60,6 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
+                      //! This borderSide will be used for Removing the borderSide.none
+                      borderSide: BorderSide.none,
                     ),
                   ),
                 ),
