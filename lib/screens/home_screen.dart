@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: songs.length,
                         itemBuilder: (context, index) {
                           return SongCard(
-                            songs: songs[index],
+                            song: songs[index],
                           );
                         },
                         scrollDirection: Axis.horizontal,
