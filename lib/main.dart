@@ -17,7 +17,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Music App',
-      theme: ThemeData(primaryColor: Colors.blue),
+      theme: ThemeData(
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Colors.white,
+              displayColor: Colors.white,
+            ),
+      ),
       home: HomeScreen(),
       getPages: [
         GetPage(name: '/', page: () => HomeScreen()),
