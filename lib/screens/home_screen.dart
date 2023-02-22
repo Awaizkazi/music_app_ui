@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/song_model.dart';
+import '../widgets/section_header.dart';
+import '../widgets/song_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,10 +35,27 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               //! Here we are calling the Cusotmize Search bar
               _DiscoverMusic(),
-              Column(
-                children: [
-                  SectionHeader(title: 'Trending Music'),
-                ],
+              Padding(
+                padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: SectionHeader(title: 'Trending Music'),
+                    ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.27,
+                      child: ListView.builder(
+                        itemCount: songs.length,
+                        itemBuilder: (context, index) {
+                          return SongCard(songs: songs);
+                        },
+                        scrollDirection: Axis.horizontal,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -46,38 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class SectionHeader extends StatelessWidget {
-  const SectionHeader({
-    super.key,
-    required this.title,
-    this.action = 'View More',
-  });
-  final String title;
-  final String action;
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Trending Music',
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        Text(
-          'View More',
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(color: Colors.white),
-        ),
-      ],
-    );
-  }
-}
 
 class _DiscoverMusic extends StatelessWidget {
   const _DiscoverMusic({
