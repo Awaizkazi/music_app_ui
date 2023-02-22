@@ -35,12 +35,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Welcome',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
+                SizedBox(height: 10),
                 Text(
                   'Enjoy your favorite music',
                   style: Theme.of(context)
                       .textTheme
                       .headline6!
                       .copyWith(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  decoration: InputDecoration(
+                    isDense: true,
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'Search',
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.grey.shade500),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.grey.shade400,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
                 ),
               ],
             ),
