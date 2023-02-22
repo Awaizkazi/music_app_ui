@@ -23,33 +23,66 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white,
-          backgroundColor: Colors.deepPurple.shade800,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_outline),
-              label: 'Favorites',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.play_circle_outline),
-              label: 'Play',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people_outline),
-              label: 'Profile',
-            ),
-          ],
-        ),
+        bottomNavigationBar: _customNavBar(),
         appBar: _CustomAppBar(),
-        body: Container(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Welcome',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  'Enjoy your favorite music',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
+    );
+  }
+}
+
+class _customNavBar extends StatelessWidget {
+  const _customNavBar({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
+      backgroundColor: Colors.deepPurple.shade800,
+      type: BottomNavigationBarType.fixed,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite_outline),
+          label: 'Favorites',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.play_circle_outline),
+          label: 'Play',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.people_outline),
+          label: 'Profile',
+        ),
+      ],
     );
   }
 }
