@@ -114,47 +114,7 @@ class PlayerButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        StreamBuilder(
-          stream: audioPlayer.playerStateStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final playerState = snapshot.data;
-              final ProcessingState =
-                  (playerState! as PlayerState).processingState;
-            }
-            if (ProcessingState == ProcessingState.loading ||
-                ProcessingState == ProcessingState.buffering) {
-              return Container(
-                width: 60.0,
-                height: 60.0,
-                margin: EdgeInsets.all(10.0),
-                child: CircularProgressIndicator(),
-              );
-            }
-            //! IF the Song is not playing then show the Player Icon
-            else if (!audioPlayer.playing) {
-              return IconButton(
-                onPressed: audioPlayer.play,
-                iconSize: 70,
-                icon: Icon(
-                  Icons.play_circle,
-                  color: Colors.white,
-                ),
-              );
-            } else if (ProcessingState != ProcessingState.completed) {
-              return IconButton(
-                onPressed: audioPlayer.play,
-                iconSize: 70,
-                icon: Icon(
-                  Icons.pause_circle,
-                  color: Colors.white,
-                ),
-              );
-            } else {
-              return CircularProgressIndicator();
-            }
-          },
-        ),
+        
       ],
     );
   }
