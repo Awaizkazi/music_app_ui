@@ -64,6 +64,7 @@ class _SongScreenState extends State<SongScreen> {
               return SeekBar(
                 position: positionData?.duration ?? Duration.zero,
                 duration: positionData?.duration ?? Duration.zero,
+                onChanged: audioPlayer.seek,
               );
             },
             stream: _seekBarDataStream,
