@@ -3,6 +3,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart' as rxdart;
 
 import '../models/song_model.dart';
+import '../widgets/player_buttons.dart';
 import '../widgets/seekbar.dart';
 
 class SongScreen extends StatefulWidget {
@@ -104,8 +105,6 @@ class _MusicPlayer extends StatelessWidget {
     );
   }
 }
-
-
 
 class _BackgroundFilter extends StatelessWidget {
   const _BackgroundFilter({
