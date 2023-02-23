@@ -58,7 +58,8 @@ class _SongScreenState extends State<SongScreen> {
             fit: BoxFit.cover,
           ),
           _BackgroundFilter(),
-          _MusicPlayer(audioPlayer: audioPlayer, seekBarDataStream: _seekBarDataStream),
+          _MusicPlayer(
+              audioPlayer: audioPlayer, seekBarDataStream: _seekBarDataStream),
         ],
       ),
     );
@@ -77,16 +78,84 @@ class _MusicPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<SeekBarData>(
-      builder: (context, snapshot) {
-        final positionData = snapshot.data;
-        return SeekBar(
-          position: positionData?.position ?? Duration.zero,
-          duration: positionData?.duration ?? Duration.zero,
-          onChanged: audioPlayer.seek,
-        );
-      },
-      stream: _seekBarDataStream,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          StreamBuilder<SeekBarData>(
+            builder: (context, snapshot) {
+              final positionData = snapshot.data;
+              return SeekBar(
+                position: positionData?.position ?? Duration.zero,
+                duration: positionData?.duration ?? Duration.zero,
+                onChanged: audioPlayer.seek,
+              );
+            },
+            stream: _seekBarDataStream,
+          ),
+          PlayerButtons(audioPlayer: audioPlayer)
+        ],
+      ),
+    );
+  }
+}
+
+class PlayerButtons extends StatelessWidget {
+  const PlayerButtons({
+    super.key,
+    required this.audioPlayer,
+  });
+
+  final AudioPlayer audioPlayer;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        StreamBuilder(
+          stream: audioPlayer.playerStateStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final playerState = snapshot.data;
+              final ProcessingState =
+                  (playerState! as PlayerState).processingState;
+            }
+            if (ProcessingState == ProcessingState.loading ||
+                ProcessingState == ProcessingState.buffering) {
+              return Container(
+                width: 60.0,
+                height: 60.0,
+                margin: EdgeInsets.all(10.0),
+                child: CircularProgressIndicator(),
+              );
+            }
+            //! IF the Song is not playing then show the Player Icon
+            else if (!audioPlayer.playing) {
+              return IconButton(
+                onPressed: audioPlayer.play,
+                iconSize: 70,
+                icon: Icon(
+                  Icons.play_circle,
+                  color: Colors.white,
+                ),
+              );
+            } else if (ProcessingState != ProcessingState.completed) {
+              return IconButton(
+                onPressed: audioPlayer.play,
+                iconSize: 70,
+                icon: Icon(
+                  Icons.pause_circle,
+                  color: Colors.white,
+                ),
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        ),
+      ],
     );
   }
 }
