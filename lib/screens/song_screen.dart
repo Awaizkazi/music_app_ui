@@ -15,6 +15,28 @@ class _SongScreenState extends State<SongScreen> {
   Widget build(BuildContext context) {
     AudioPlayer audioPlayer = AudioPlayer();
     Song song = Song.songs[0];
+
+    @override
+    void initState() {
+      super.initState();
+      audioPlayer.setAudioSource(
+        ConcatenatingAudioSource(
+          children: [
+            AudioSource.uri(
+              Uri.parse('asset:///${song.url}'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    @override
+    void dispose() {
+      audioPlayer.dispose();
+      super.dispose();
+    }
+
+Stream<SeekBarData> get _seekBarDataStream => ;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
