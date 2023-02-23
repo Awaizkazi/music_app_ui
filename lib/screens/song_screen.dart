@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:rxdart/rxdart.dart' as rxdart;
 
 import '../models/song_model.dart';
+import '../widgets/seekbar.dart';
 
 class SongScreen extends StatefulWidget {
   const SongScreen({super.key});
@@ -11,32 +13,37 @@ class SongScreen extends StatefulWidget {
 }
 
 class _SongScreenState extends State<SongScreen> {
+  AudioPlayer audioPlayer = AudioPlayer();
+  Song song = Song.songs[0];
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer.setAudioSource(
+      ConcatenatingAudioSource(
+        children: [
+          AudioSource.uri(
+            Uri.parse('asset:///${song.url}'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Stream<SeekBarData> get _seekBarDataStream =>
+      rxdart.Rx.combineLatest2<Duration, Duration?, SeekBarData>(
+          audioPlayer.positionStream, audioPlayer.durationStream,
+          (Duration position, Duration? duration) {
+        return SeekBarData(position, duration ?? Duration.zero);
+      });
+
   @override
   Widget build(BuildContext context) {
-    AudioPlayer audioPlayer = AudioPlayer();
-    Song song = Song.songs[0];
-
-    @override
-    void initState() {
-      super.initState();
-      audioPlayer.setAudioSource(
-        ConcatenatingAudioSource(
-          children: [
-            AudioSource.uri(
-              Uri.parse('asset:///${song.url}'),
-            ),
-          ],
-        ),
-      );
-    }
-
-    @override
-    void dispose() {
-      audioPlayer.dispose();
-      super.dispose();
-    }
-
-Stream<SeekBarData> get _seekBarDataStream => ;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
