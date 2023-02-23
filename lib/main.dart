@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
               displayColor: Colors.white,
             ),
       ),
-      home: SongScreen(),
+      home: HomeScreen(),
       getPages: [
         GetPage(name: '/', page: () => HomeScreen()),
         GetPage(name: '/song', page: () => SongScreen()),
@@ -38,5 +38,5 @@ class MyApp extends StatelessWidget {
 
 /*
 https://www.youtube.com/watch?v=12ktVNkKw5w
-30 : 28 Se Dekna hai
+41 : 00 Se Dekna hai
 */

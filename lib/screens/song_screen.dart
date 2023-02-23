@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart' as rxdart;
 
@@ -15,7 +16,7 @@ class SongScreen extends StatefulWidget {
 
 class _SongScreenState extends State<SongScreen> {
   AudioPlayer audioPlayer = AudioPlayer();
-  Song song = Song.songs[0];
+  Song song = Get.arguments ?? Song.songs[0];
   @override
   void initState() {
     super.initState();
@@ -24,6 +25,12 @@ class _SongScreenState extends State<SongScreen> {
         children: [
           AudioSource.uri(
             Uri.parse('asset:///${song.url}'),
+          ),
+          AudioSource.uri(
+            Uri.parse('asset:///${Song.songs[1].url}'),
+          ),
+          AudioSource.uri(
+            Uri.parse('asset:///${Song.songs[2].url}'),
           ),
         ],
       ),
@@ -59,8 +66,13 @@ class _SongScreenState extends State<SongScreen> {
             fit: BoxFit.cover,
           ),
           _BackgroundFilter(),
+          // _MusicPlayer(
+          //     audioPlayer: audioPlayer, seekBarDataStream: _seekBarDataStream),
           _MusicPlayer(
-              audioPlayer: audioPlayer, seekBarDataStream: _seekBarDataStream),
+            song: song,
+            audioPlayer: audioPlayer,
+            seekBarDataStream: _seekBarDataStream,
+          ),
         ],
       ),
     );
@@ -70,21 +82,42 @@ class _SongScreenState extends State<SongScreen> {
 class _MusicPlayer extends StatelessWidget {
   const _MusicPlayer({
     super.key,
+    required this.song,
     required this.audioPlayer,
     required Stream<SeekBarData> seekBarDataStream,
   }) : _seekBarDataStream = seekBarDataStream;
 
+  final Song song;
   final AudioPlayer audioPlayer;
   final Stream<SeekBarData> _seekBarDataStream;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //TODO Text for the TITLE of Song
+          Text(
+            song.title,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10),
+          //TODO Text for the DESCRIPTION of Song
+          Text(
+            song.description,
+            maxLines: 2,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: Colors.white),
+          ),
+          SizedBox(height: 10),
           StreamBuilder<SeekBarData>(
             builder: (context, snapshot) {
               final positionData = snapshot.data;
@@ -97,8 +130,28 @@ class _MusicPlayer extends StatelessWidget {
             stream: _seekBarDataStream,
           ),
           // * Widget Calling here
-          PlayerButtons(
-            audioPlayer: audioPlayer,
+          PlayerButtons(audioPlayer: audioPlayer),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.white,
+                ),
+                iconSize: 30,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.cloud_download,
+                  color: Colors.white,
+                ),
+                iconSize: 30,
+              ),
+            ],
           ),
         ],
       ),

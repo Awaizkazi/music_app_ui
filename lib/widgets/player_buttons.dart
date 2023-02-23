@@ -10,14 +10,30 @@ class PlayerButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        StreamBuilder(
+        //TODO Stream Builder 1 for Previous Button
+        StreamBuilder<SequenceState?>(
+          stream: audioPlayer.sequenceStateStream,
+          builder: ((context, index) {
+            return IconButton(
+              onPressed:
+                  audioPlayer.hasPrevious ? audioPlayer.seekToPrevious : null,
+              iconSize: 45,
+              icon: Icon(
+                Icons.skip_previous,
+                color: Colors.white,
+              ),
+            );
+          }),
+        ),
+        //TODO Stream Builder 2
+        StreamBuilder<PlayerState>(
           stream: audioPlayer.playerStateStream,
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
               final playerState = snapshot.data;
-              final processingState =
-                  (playerState! as PlayerState).processingState;
+              final processingState = playerState!.processingState;
               //! Another IF starts here
               if (ProcessingState == ProcessingState.loading ||
                   ProcessingState == ProcessingState.buffering) {
@@ -61,6 +77,20 @@ class PlayerButtons extends StatelessWidget {
             } else {
               return CircularProgressIndicator();
             }
+          }),
+        ),
+        //TODO Stream Builder 3 for Next Song
+        StreamBuilder<SequenceState?>(
+          stream: audioPlayer.sequenceStateStream,
+          builder: ((context, index) {
+            return IconButton(
+              onPressed: audioPlayer.hasNext ? audioPlayer.seekToNext : null,
+              iconSize: 45,
+              icon: Icon(
+                Icons.skip_next,
+                color: Colors.white,
+              ),
+            );
           }),
         ),
       ],
