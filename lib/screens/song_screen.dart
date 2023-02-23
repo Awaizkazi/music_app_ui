@@ -58,19 +58,35 @@ class _SongScreenState extends State<SongScreen> {
             fit: BoxFit.cover,
           ),
           _BackgroundFilter(),
-          StreamBuilder<SeekBarData>(
-            builder: (context, snapshot) {
-              final positionData = snapshot.data;
-              return SeekBar(
-                position: positionData?.position ?? Duration.zero,
-                duration: positionData?.duration ?? Duration.zero,
-                onChanged: audioPlayer.seek,
-              );
-            },
-            stream: _seekBarDataStream,
-          ),
+          _MusicPlayer(audioPlayer: audioPlayer, seekBarDataStream: _seekBarDataStream),
         ],
       ),
+    );
+  }
+}
+
+class _MusicPlayer extends StatelessWidget {
+  const _MusicPlayer({
+    super.key,
+    required this.audioPlayer,
+    required Stream<SeekBarData> seekBarDataStream,
+  }) : _seekBarDataStream = seekBarDataStream;
+
+  final AudioPlayer audioPlayer;
+  final Stream<SeekBarData> _seekBarDataStream;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<SeekBarData>(
+      builder: (context, snapshot) {
+        final positionData = snapshot.data;
+        return SeekBar(
+          position: positionData?.position ?? Duration.zero,
+          duration: positionData?.duration ?? Duration.zero,
+          onChanged: audioPlayer.seek,
+        );
+      },
+      stream: _seekBarDataStream,
     );
   }
 }
