@@ -95,30 +95,17 @@ class _MusicPlayer extends StatelessWidget {
             },
             stream: _seekBarDataStream,
           ),
-          PlayerButtons(audioPlayer: audioPlayer)
+          // * Widget Calling here
+          PlayerButtons(
+            audioPlayer: audioPlayer,
+          ),
         ],
       ),
     );
   }
 }
 
-class PlayerButtons extends StatelessWidget {
-  const PlayerButtons({
-    super.key,
-    required this.audioPlayer,
-  });
 
-  final AudioPlayer audioPlayer;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        
-      ],
-    );
-  }
-}
 
 class _BackgroundFilter extends StatelessWidget {
   const _BackgroundFilter({
